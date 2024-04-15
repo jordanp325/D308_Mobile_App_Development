@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         ((Button)vacation.findViewById(R.id.vacationDelete)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                if(database.excursionDao().getExcursions(id).size() > 0){
+                    AddVacationActivity.DisplayPopup(activity, "You can't delete a vacation while it still has excursions");
+                    return;
+                }
+
                 Vacation v = database.vacationDao().getVacation(id);
                 database.vacationDao().deleteVacation(v);
                 ((ViewGroup)findViewById(R.id.insertPoint)).removeView(vacation);

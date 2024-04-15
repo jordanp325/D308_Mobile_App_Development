@@ -64,6 +64,11 @@ public class ViewVacationActivity extends AppCompatActivity {
     }
 
     public void ClickDelete(View view){
+        if(database.excursionDao().getExcursions(id).size() > 0){
+            AddVacationActivity.DisplayPopup(this, "You can't delete a vacation while it still has excursions");
+            return;
+        }
+
         database.vacationDao().deleteVacation(database.vacationDao().getVacation(id));
         ClickHome(view);
     }
