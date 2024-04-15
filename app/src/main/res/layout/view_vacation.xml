@@ -10,7 +10,9 @@
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="300dp"
+        android:layout_marginEnd="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,14 +58,11 @@
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="700dp"
         android:layout_marginEnd="16dp"
         android:onClick="ClickHome"
         android:text="Home"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-        app:layout_constraintEnd_toStartOf="@+id/button7"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19999999" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button7" />
 
     <TextView
         android:id="@+id/textView17"
@@ -168,24 +167,16 @@
         app:layout_constraintStart_toStartOf="@+id/viewVacationStartDate"
         app:layout_constraintTop_toBottomOf="@+id/viewVacationStartDate" />
 
-    <EditText
-        android:id="@+id/viewVacationExcursionTitle"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintStart_toEndOf="@+id/textView8" />
-
     <Button
         android:id="@+id/button4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
         android:onClick="ClickAddExcursion"
         android:text="Add"
-        app:layout_constraintBottom_toBottomOf="@+id/viewVacationExcursionTitle"
-        app:layout_constraintStart_toEndOf="@+id/viewVacationExcursionTitle" />
+        app:layout_constraintBottom_toBottomOf="@+id/textView8"
+        app:layout_constraintStart_toEndOf="@+id/textView8" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

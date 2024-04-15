@@ -1,5 +1,6 @@
 package com.example.j_paschal_java_mobile_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,35 +75,26 @@ public class ViewVacationActivity extends AppCompatActivity {
 
 
     public void ClickAddExcursion(View v){
-        AddExcursion();
-    }
-
-    void AddExcursion(){
-        AddExcursion(-1);
+        Intent intent = new Intent(this, EditExcursionActivity.class);
+        intent.putExtra("vacationId", id);
+        startActivity(intent);
     }
 
     void AddExcursion(long eId){
-        String title;
-        if(eId == -1){
-            title = ((EditText)findViewById(R.id.viewVacationExcursionTitle)).getText().toString();
-            eId = database.excursionDao().addExcursion(new Excursion(eId, title, new Date().getTime(), id));
-        }
-        else{
-            title = database.excursionDao().getExcursion(eId).Title();
-        }
+        Excursion e = database.excursionDao().getExcursion(eId);
         //this variable must be final for use in the below classes
         final long excursionId = eId;
+        ViewVacationActivity activity = this;
 
         View excursion = MainActivity.LI.inflate(R.layout.excursion_entry, null);
-        ((TextView)excursion.findViewById(R.id.excursionEntryTitle)).setText(title);
-        ((Button)excursion.findViewById(R.id.excursionEntryReplace)).setOnClickListener(new View.OnClickListener() {
+        ((TextView)excursion.findViewById(R.id.excursionEntryTitle)).setText(e.Title() + " - "+ AddVacationActivity.DateToShortString(e.Date()));
+        ((Button)excursion.findViewById(R.id.excursionEntryEdit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String newTitle = ((EditText)findViewById(R.id.viewVacationExcursionTitle)).getText().toString();
-                Excursion newExcursion = new Excursion(excursionId, newTitle, new Date().getTime(), id);
-                database.excursionDao().updateExcursion(newExcursion);
-
-                ((TextView)excursion.findViewById(R.id.excursionEntryTitle)).setText(newTitle);
+                Intent intent = new Intent(activity, EditExcursionActivity.class);
+                intent.putExtra("vacationId", id);
+                intent.putExtra("excursionId", excursionId);
+                startActivity(intent);
             }
         });
         ((Button)excursion.findViewById(R.id.excursionEntryDelete)).setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@
         android:theme="@style/Theme.J_Paschal_Java_Mobile_App">
         <activity android:name=".AddVacationActivity" android:exported="false"/>
         <activity android:name=".ViewVacationActivity" android:exported="false"/>
+        <activity android:name=".EditExcursionActivity" android:exported="false"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

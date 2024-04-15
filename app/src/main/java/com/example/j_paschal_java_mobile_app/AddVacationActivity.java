@@ -44,8 +44,6 @@ public class AddVacationActivity extends AppCompatActivity {
         String placeOfStay = ((EditText)findViewById(R.id.editVacationPlaceOfStay)).getText().toString();
         String startDate = ((EditText)findViewById(R.id.editVacationStartDate)).getText().toString();
         String endDate = ((EditText)findViewById(R.id.editVacationEndDate)).getText().toString();
-        //todo: verify start and end dates
-        //todo: verify all fields are filled
 
         if(title.equals("") || placeOfStay.equals("") || startDate.equals("") || endDate.equals("")){
             DisplayPopup(this, "Not all fields are filled");

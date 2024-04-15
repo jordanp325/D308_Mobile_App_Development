@@ -17,12 +17,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/excursionEntryReplace"
+        android:id="@+id/excursionEntryEdit"
         android:layout_width="105dp"
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Replace"
+        android:text="Edit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/excursionEntryTitle" />
 
@@ -32,6 +32,6 @@
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:text="Delete"
-        app:layout_constraintStart_toEndOf="@+id/excursionEntryReplace"
-        app:layout_constraintTop_toTopOf="@+id/excursionEntryReplace" />
+        app:layout_constraintStart_toEndOf="@+id/excursionEntryEdit"
+        app:layout_constraintTop_toTopOf="@+id/excursionEntryEdit" />
 </androidx.constraintlayout.widget.ConstraintLayout>
