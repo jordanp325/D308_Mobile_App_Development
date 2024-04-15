@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -46,6 +47,12 @@ public class Excursion {
 
     public long VacationId(){
         return VacationId;
+    }
+
+    @Ignore
+    public Excursion(@NonNull long id, @NonNull String Title, @NonNull long Date, @NonNull long VacationId){
+        this(Title, Date, VacationId);
+        Id = id;
     }
 
     public Excursion(@NonNull String Title, @NonNull long Date, @NonNull long VacationId){

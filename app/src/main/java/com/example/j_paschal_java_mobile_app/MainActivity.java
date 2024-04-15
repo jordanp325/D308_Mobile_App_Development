@@ -1,10 +1,12 @@
 package com.example.j_paschal_java_mobile_app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.sax.EndElementListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,14 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    public static LayoutInflater LI;
     VacationDatabase database;
-    LayoutInflater LI;
     int vacationsNumber = 0;
 
     @Override
@@ -38,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         if(vacations.size() > 0) {
             for (Vacation v : vacations) {
                 AddEntry(v);
+                if(AddVacationActivity.DateToShortString(v.StartDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
+                    AddVacationActivity.DisplayPopup(this, "Time for "+v.Title()+"!\n Let's go on vacation!");
+                }
+                if(AddVacationActivity.DateToShortString(v.EndDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
+                    AddVacationActivity.DisplayPopup(this, "It's the last day of "+v.Title());
+                }
             }
         }
         else{
@@ -80,6 +89,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ((Button)vacation.findViewById(R.id.vacationView)).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, ViewVacationActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
+            }
+        });
+
         ((ViewGroup)findViewById(R.id.insertPoint)).addView(vacation);
         vacationsNumber++;
     }
@@ -92,5 +110,57 @@ public class MainActivity extends AppCompatActivity {
     void displayNoVacation(){
         View noVacation = LI.inflate(R.layout.no_vacation, null);
         ((ViewGroup)findViewById(R.id.insertPoint)).addView(noVacation);
+    }
+
+    public static String ExportVacation(Vacation vacation){
+        //create string array of data
+        String[] strings = new String[]{vacation.Title(), vacation.PlaceOfStay(), AddVacationActivity.DateToShortString(vacation.StartDate()), AddVacationActivity.DateToShortString(vacation.EndDate())};
+
+        //escape each special character
+        //$ - escape character
+        //~ - seperator for data string
+        for(int i = 0; i < strings.length; i++){
+            strings[i].replaceAll("\\$", "$$");
+            strings[i].replaceAll("~", "$~");
+        }
+
+        //combine strings with seperator
+        String combined = strings[0];
+        for(int i = 1; i < strings.length; i++){
+            combined += "~" + strings[i];
+        }
+
+        //encode string data
+        String encodedString = Base64.getEncoder().encodeToString(combined.getBytes());
+
+        //return encoded data
+        return encodedString;
+    }
+
+    public static Vacation ImportVacation(String code) {
+        return ImportVacation(code, -1);
+    }
+    public static Vacation ImportVacation(String code, long id){
+        //decode from string
+        String decodedString = new String(Base64.getDecoder().decode(code));
+
+        //separate strings with some clever regex
+        //Java will not allow a * or {0,} inside of a regex lookbehind, so I have to add a finite limit to the number of $ escapes
+        //This means if anyone adds 10001 or more $ at the end of their vacation title or place of stay, the vacation code will be unreadable
+        String[] strings = decodedString.split("(?<=[^\\$](\\$\\$){0,10000})~");
+
+        //unescape all escaped characters
+        for(int i = 0; i < strings.length; i++){
+            strings[i].replaceAll("\\$~", "~");
+            strings[i].replaceAll("\\$\\$", "$");
+        }
+
+        //recompile all string data into vacation object
+        Vacation vacation;
+        if(id == -1) vacation = new Vacation(strings[0], strings[1], new Date(strings[2]).getTime(), new Date(strings[3]).getTime());
+        else vacation = new Vacation(id, strings[0], strings[1], new Date(strings[2]).getTime(), new Date(strings[3]).getTime());
+
+        //return vacation object
+        return vacation;
     }
 }

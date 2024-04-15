@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 //if database scheme is out of date, increase this version number and the database will be rebuilt
-@Database(entities = {Vacation.class, Excursion.class}, version = 2, exportSchema = false)
+@Database(entities = {Vacation.class, Excursion.class}, version = 3, exportSchema = false)
 public abstract class VacationDatabase extends RoomDatabase {
     public abstract VacationDao vacationDao();
     public abstract ExcursionDao excursionDao();

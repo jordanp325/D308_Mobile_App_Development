@@ -14,8 +14,11 @@ public interface ExcursionDao {
     @Query("SELECT * FROM Excursion WHERE vacationId = :vacationId")
     List<Excursion> getExcursions(long vacationId);
 
+    @Query("SELECT * FROM Excursion WHERE id = :id")
+    Excursion getExcursion(long id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addExcursion(Excursion excursion);
+    long addExcursion(Excursion excursion);
 
     @Update
     void updateExcursion(Excursion excursion);

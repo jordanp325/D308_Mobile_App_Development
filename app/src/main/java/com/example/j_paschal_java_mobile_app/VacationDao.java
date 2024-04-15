@@ -18,7 +18,7 @@ public interface VacationDao {
     Vacation getVacation(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void addVacation(Vacation vacation);
+    long addVacation(Vacation vacation); //returns the new vacation id
 
     @Update
     void updateVacation(Vacation vacation);

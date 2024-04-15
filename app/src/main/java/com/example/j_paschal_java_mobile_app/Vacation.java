@@ -34,6 +34,11 @@ public class Vacation {
     @ColumnInfo(name = "endDate")
     private long EndDate;
 
+    @NonNull
+    @Setter
+    @ColumnInfo(name = "notify")
+    private boolean Notify = false;
+
 
     public long Id(){
         return Id;
@@ -54,6 +59,9 @@ public class Vacation {
     public long EndDate(){
         return EndDate;
     }
+
+    public boolean Notify(){return Notify;}
+    public void SetNotification(boolean notify){Notify = notify;}
 
     @Ignore
     public Vacation(@NonNull long Id, @NonNull String Title, @NonNull String PlaceOfStay, @NonNull long StartDate, @NonNull long EndDate)  {
