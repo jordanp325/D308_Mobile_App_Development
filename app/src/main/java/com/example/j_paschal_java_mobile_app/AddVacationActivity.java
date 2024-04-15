@@ -28,6 +28,7 @@ public class AddVacationActivity extends AppCompatActivity {
 
         //an id is passed into this screen if it is editing a vacation instead of adding one
         if(id != -1){
+            getSupportActionBar().setTitle("Edit Vacation");
             Vacation vacation = database.vacationDao().getVacation(id);
             ((TextView)findViewById(R.id.editVacationHeader)).setText("Edit vacation");
 
@@ -36,6 +37,8 @@ public class AddVacationActivity extends AppCompatActivity {
             ((TextView)findViewById(R.id.editVacationStartDate)).setText(DateToShortString(new Date(vacation.StartDate())));
             ((TextView)findViewById(R.id.editVacationEndDate)).setText(DateToShortString(new Date(vacation.EndDate())));
         }
+        else
+            getSupportActionBar().setTitle("Add Vacation");
     }
 
 
@@ -64,7 +67,7 @@ public class AddVacationActivity extends AppCompatActivity {
 
         if(id == -1) {
             Vacation v = new Vacation(title, placeOfStay, new Date(startDate).getTime(), new Date(endDate).getTime());
-            database.vacationDao().addVacation(v);
+            id = database.vacationDao().addVacation(v);
         }
         else{
             Vacation v = new Vacation(id, title, placeOfStay, new Date(startDate).getTime(), new Date(endDate).getTime());

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Starting...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Vacation Scheduler");
 
         database = VacationDatabase.getDatabase(getApplicationContext());
 //        database.excursionDao().deleteAll();

@@ -31,28 +31,46 @@ public class EditExcursionActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.editExcursionVacationTitle)).setText(vacation.Title());
 
         if(excursionId != -1){
+            getSupportActionBar().setTitle("Edit Excursion");
             Excursion e = database.excursionDao().getExcursion(excursionId);
             ((TextView)findViewById(R.id.editExcursionHeader)).setText("Edit excursion for");
             ((EditText)findViewById(R.id.editExcursionTitle)).setText(e.Title());
             ((EditText)findViewById(R.id.editExcursionDate)).setText(AddVacationActivity.DateToShortString(e.Date()));
         }
+        else
+            getSupportActionBar().setTitle("Add Excursion");
     }
 
     public void SaveClick(View view){
         String title = ((EditText)findViewById(R.id.editExcursionTitle)).getText().toString();
-        long date = new Date(((EditText)findViewById(R.id.editExcursionDate)).getText().toString()).getTime();
+        String date = ((EditText)findViewById(R.id.editExcursionDate)).getText().toString();
+        Vacation vacation = database.vacationDao().getVacation(vacationId);
+
+        if(title.equals("") || date.equals("")){
+            AddVacationActivity.DisplayPopup(this, "Not all fields are filled");
+            return;
+        }
+        if(!AddVacationActivity.StringIsValidDate(date)){
+            AddVacationActivity.DisplayPopup(this, "Your date must be valid");
+            return;
+        }
+        if(new Date(date).before(new Date(vacation.StartDate())) || new Date(date).after(new Date(vacation.EndDate()))){
+            AddVacationActivity.DisplayPopup(this, "Your excursion date must be during its vacation");
+            return;
+        }
 
         if(excursionId != -1){
-            Excursion excursion = new Excursion(excursionId, title, date, vacationId);
+            Excursion excursion = new Excursion(excursionId, title, new Date(date).getTime(), vacationId);
             database.excursionDao().updateExcursion(excursion);
         }
         else {
-            Excursion excursion = new Excursion(title, date, vacationId);
-            database.excursionDao().addExcursion(excursion);
+            Excursion excursion = new Excursion(title, new Date(date).getTime(), vacationId);
+            excursionId = database.excursionDao().addExcursion(excursion);
         }
 
-        Intent intent = new Intent(this, ViewVacationActivity.class);
-        intent.putExtra("id", vacationId);
+        Intent intent = new Intent(this, ViewExcursionActivity.class);
+        intent.putExtra("vacationId", vacationId);
+        intent.putExtra("excursionId", excursionId);
         startActivity(intent);
     }
 }

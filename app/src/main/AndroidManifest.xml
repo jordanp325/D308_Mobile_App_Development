@@ -12,6 +12,7 @@
         <activity android:name=".AddVacationActivity" android:exported="false"/>
         <activity android:name=".ViewVacationActivity" android:exported="false"/>
         <activity android:name=".EditExcursionActivity" android:exported="false"/>
+        <activity android:name=".ViewExcursionActivity" android:exported="false"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

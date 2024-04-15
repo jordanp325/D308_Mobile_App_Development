@@ -32,6 +32,11 @@ public class Excursion {
     @ColumnInfo(name = "vacationId")
     private long VacationId;
 
+    @NonNull
+    @Setter
+    @ColumnInfo(name = "notify")
+    private boolean Notify = false;
+
 
     public long Id(){
         return Id;
@@ -48,6 +53,9 @@ public class Excursion {
     public long VacationId(){
         return VacationId;
     }
+
+    public boolean Notify(){return Notify;}
+    public void SetNotification(boolean notify){Notify = notify;}
 
     @Ignore
     public Excursion(@NonNull long id, @NonNull String Title, @NonNull long Date, @NonNull long VacationId){
