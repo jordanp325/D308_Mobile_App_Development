@@ -42,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
         if(vacations.size() > 0) {
             for (Vacation v : vacations) {
                 AddEntry(v);
-                if(AddVacationActivity.DateToShortString(v.StartDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
-                    AddVacationActivity.DisplayPopup(this, "Time for "+v.Title()+"!\n Let's go on vacation!");
-                }
-                if(AddVacationActivity.DateToShortString(v.EndDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
-                    AddVacationActivity.DisplayPopup(this, "It's the last day of "+v.Title());
-                }
+//                if(AddVacationActivity.DateToShortString(v.StartDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
+//                    AddVacationActivity.DisplayPopup(this, "Time for "+v.Title()+"!\n Let's go on vacation!");
+//                }
+//                if(AddVacationActivity.DateToShortString(v.EndDate()).equals(AddVacationActivity.DateToShortString(new Date().getTime())) && v.Notify()){
+//                    AddVacationActivity.DisplayPopup(this, "It's the last day of "+v.Title());
+//                }
             }
         }
         else{

@@ -93,7 +93,7 @@ public class AddVacationActivity extends AppCompatActivity {
             startActivity(intent);
         }
         catch(Exception e){
-            DisplayPopup(this, "The import code is missing or incorrectly formatted.");
+            DisplayPopup(this, "The import code is missing or incorrectly formatted. Please only type the import code");
         }
     }
 

@@ -36,8 +36,16 @@ public class ViewExcursionActivity extends AppCompatActivity {
 
     public void NotifyClick(View view){
         Excursion excursion = database.excursionDao().getExcursion(excursionId);
-        excursion.SetNotification(((CheckBox)findViewById(R.id.viewExcursionNotify)).isChecked());
+        boolean notify = ((CheckBox)findViewById(R.id.viewExcursionNotify)).isChecked();
+        excursion.SetNotification(notify);
         database.excursionDao().updateExcursion(excursion);
+
+        if(notify){
+            ViewVacationActivity.scheduleNotification(excursion.Date(), "Excursion today!", "Time for "+excursion.Title(), (int)excursion.Id() + (Integer.MAX_VALUE/2), getApplicationContext());
+        }
+        else{
+            ViewVacationActivity.CancelNotification((int)excursion.Id() + (Integer.MAX_VALUE/2), getApplicationContext());
+        }
     }
 
     public void BackClick(View view){
